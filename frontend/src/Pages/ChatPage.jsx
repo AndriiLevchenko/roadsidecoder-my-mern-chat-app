@@ -1,51 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import {ChatState} from "../Context/ChatProvider";
+import {Box} from "@chakra-ui/react";
+import SideDrawer from "../components/miscellaneous/SideDrawer";
+import MyChats from "../components/MyChats";
+import ChatBox from "../components/ChatBox";
 
 const ChatPage = () => {
-    const [chats, setChats] = useState([]);
-    const fetchChats =async()=>{
-        const data = await axios.get("http://localhost:5000/api/chat");
-        console.log("data = ", data);
-        if(data) {
-            setChats(data.data);
-        }
-        // const res = await fetch("/api/chat");
-        // console.log("res = ", res);
-        // // const data = await res.json();
-        // const data = res.data;
-        // console.log("data = ", data);
-        // if (data.error) {
-        //     throw new Error(data.error);
-        // }
-        // setChats(data.data);
-    }
-    useEffect(()=>{
-        fetchChats();
-    }, []);
-
-    // useEffect(() => {
-    //     const getConversations = async () => {
-    //
-    //         try {
-    //             const res = await fetch("/api/chat");
-    //             console.log("res = ", res);
-    //             const data = await res.json();
-    //             console.log("data = ", data);
-    //             if (data.error) {
-    //                 throw new Error(data.error);
-    //             }
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
-    //
-    //     getConversations();
-    // }, []);
-
+    const [fetchAgain, setFetchAgain] = useState(false);
+    const {user} = ChatState();
 
     return (
-        <div>ChatPage
-            <div>{ chats.map((item, i)=><p key={item._id + i}>{item.chatName}</p>)}</div>
+        <div style={{ width: "100%" }}>
+            {user && <SideDrawer />}
+            <Box display="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
+                {user && <MyChats fetchAgain={fetchAgain} />}
+                {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> }
+            </Box>
         </div>
     )
 }

@@ -25,6 +25,6 @@ userSchema.pre("save", async function(next) {
 });
 
 
-const Userroads = mongoose.model("Userroads", userSchema);
+const Userroad = mongoose.model("Userroad", userSchema);
 
-export default  Userroads;
+export default  Userroad;

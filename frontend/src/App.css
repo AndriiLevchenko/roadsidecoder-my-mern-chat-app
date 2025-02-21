@@ -93,7 +93,7 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, .19),
   font-size: 14px;
 }
 button.button {
-  min-width: 120px;
+  width: 150px;
   height: 30px;
   margin-bottom: 3px;
   font-size: 14px;
@@ -104,6 +104,10 @@ button.button {
 }
 button.button:hover {
   background-color: #045fef;
+}
+.buttons-login {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* -- font styles ------------------------------------- */

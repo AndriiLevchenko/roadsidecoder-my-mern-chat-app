@@ -1,21 +1,22 @@
 import asyncHandler from "express-async-handler";
-import Userroads from "./../models/userModel.js";
+import Userroad from "./../models/userModel.js";
 import generateToken from "../config/generateToken.js";
 import bcrypt from "bcryptjs";
 
-const registerUser = asyncHandler(async (req, res) => {
+export const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password, pic} = req.body;
     if( !name || !email || !password) {
         res.status(400);
         throw new Error("Please enter all the fields");
     }
-    const userExist = await Userroads.findOne({email});
+    const userExist = await Userroad.findOne({email});
     console.log("email = ", email);
     if (userExist) {
         res.status(400);
         throw new Error("The user already exists");
     }
-    const user = await Userroads.create({
+    console.log(" name, email, password, pic = ",  name, email, password, pic);
+    const user = await Userroad.create({
         name, email, password, pic
     });
     if (user) {
@@ -32,10 +33,10 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-const authUser = async (req, res) => {
+export const authUser = asyncHandler(async (req, res) => {
     const { email, password} = req.body;
     console.log("email login = ", email);
-    const user  = await Userroads.findOne({email});
+    const user  = await Userroad.findOne({email});
     console.log("user login = ", user);
     const isPasswordCorrect = await bcrypt.compare(password, user?.password || '');
     if (user && isPasswordCorrect) {
@@ -50,7 +51,22 @@ const authUser = async (req, res) => {
         res.status(401);
         throw new Error("Invalid credentials");
     }
-};
+});
+export const allUsers = asyncHandler(async (req, res) => {
+    console.log("req.query.search = ", req.query.search);
+    const keyword = req.query.search
+    ? {
+        $or: [
+            {name: { $regex: req.query.search, $options: "i" }},
+            {email: { $regex: req.query.search, $options: "i" } }
+        ],
+    }
+    : {};
+    const users = await Userroad.find(keyword).find({_id: {$ne: req.user._id}});
+    console.log("keywod = ", keyword);
+    res.send(users);
+
+});
 //module.exports = {registerUser};
 // export default registerUser;
-export {registerUser, authUser};
+//export { authUser, registerUser};

@@ -6,6 +6,7 @@ import App from './App';
 //import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider} from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import ChatProvider from "./Context/ChatProvider";
 
 
 
@@ -13,13 +14,13 @@ import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <StrictMode>
+    <ChakraProvider >
         <BrowserRouter>
-            <ChakraProvider >
+            <ChatProvider >
                 <App />
-            </ChakraProvider>
+            </ChatProvider>
         </BrowserRouter>
-    </StrictMode>
+    </ChakraProvider>
 );
 
 // reportWebVitals();
