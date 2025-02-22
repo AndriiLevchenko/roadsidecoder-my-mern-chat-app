@@ -5,27 +5,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
-// import GroupChatModal from "./miscellaneous/GroupChatModal";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
-import GroupChatModal from "./miscellaneous/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState();
-
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
     const toast = useToast();
 
     const fetchChats = async () => {
-        // console.log(user._id);
         try {
             const config = {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
+                headers: { Authorization: `Bearer ${user.token}`}
             };
-
             const { data } = await axios.get("http://localhost:5000/api/chat", config);
             console.log("data  = ", data );
             setChats(data);
@@ -127,3 +120,4 @@ const MyChats = ({ fetchAgain }) => {
 };
 
 export default MyChats;
+//equal

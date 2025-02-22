@@ -23,3 +23,4 @@ const UserBadgeItem = ({ user, handleFunction, admin }) => {
 };
 
 export default UserBadgeItem;
+//equal

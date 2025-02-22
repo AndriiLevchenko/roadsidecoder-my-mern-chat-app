@@ -14,6 +14,7 @@ import animationData from "../animations/typing.json";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import ScrollableChat from "./ScrollableChat";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
@@ -107,7 +108,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         fetchMessages();
 
-        // selectedChatCompare = selectedChat;
+        selectedChatCompare = selectedChat;
         // eslint-disable-next-line
     }, [selectedChat]);
 
